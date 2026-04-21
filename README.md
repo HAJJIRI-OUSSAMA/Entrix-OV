@@ -28,15 +28,15 @@ Entrix is a full-stack RFID access control platform with a simulation console, l
 
 ## Screenshots
 
-| Simulator                                            | Dashboard                                            |
-| ---------------------------------------------------- | ---------------------------------------------------- |
-| ![Entrix screenshot 1](docs/screenshots/entrix1.png) | ![Entrix screenshot 2](docs/screenshots/entrix2.png) |
+| Simulator                                       | Dashboard                                       |
+| ----------------------------------------------- | ----------------------------------------------- |
+| ![Entrix screenshot 1](screenshots/entrix1.png) | ![Entrix screenshot 2](screenshots/entrix2.png) |
 
-| Cards                                                | Readers                                              |
-| ---------------------------------------------------- | ---------------------------------------------------- |
-| ![Entrix screenshot 3](docs/screenshots/entrix3.png) | ![Entrix screenshot 4](docs/screenshots/entrix4.png) |
+| Cards                                           | Readers                                         |
+| ----------------------------------------------- | ----------------------------------------------- |
+| ![Entrix screenshot 3](screenshots/entrix3.png) | ![Entrix screenshot 4](screenshots/entrix4.png) |
 
-![Entrix screenshot 5](docs/screenshots/entrix5.png)
+![Entrix screenshot 5](screenshots/entrix5.png)
 
 ## Repository structure
 
