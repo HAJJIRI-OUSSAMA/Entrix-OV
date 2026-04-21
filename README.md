@@ -38,23 +38,6 @@ Entrix is a full-stack RFID access control platform with a simulation console, l
 
 ![Entrix screenshot 5](screenshots/entrix5.png)
 
-## Repository structure
-
-```text
-.
-|- docker-compose.yml
-|- rfid-backend/
-|  |- src/
-|  |  |- adapters/inbound/rest/      # REST routes
-|  |  |- adapters/inbound/websocket/ # Socket handler registration
-|  |  |- domain/                     # Models + service logic
-|  |  |- infrastructure/             # DB, DI, seed, realtime emitter
-|- rfid-frontend/
-|  |- src/
-|  |  |- pages/                      # Dashboard, cards, readers, events, rules, simulator
-|  |  |- lib/                        # API and socket clients
-```
-
 ## Prerequisites
 
 - Docker and Docker Compose, or
@@ -76,19 +59,6 @@ docker compose up --build
 
 3. In the app, open **Scanner** and click **Seed DB** to load demo cards, readers, rules, and scan history.
 
-### Important credential alignment note
-
-The backend container uses `DATABASE_URL` from `docker-compose.yml`. Ensure PostgreSQL service credentials match that URL.
-
-Current compose values should be aligned in the same file:
-
-- `POSTGRES_USER`
-- `POSTGRES_PASSWORD`
-- `DATABASE_URL`
-- Postgres healthcheck user in `pg_isready`
-
-If these values differ, backend startup and health checks can fail.
-
 ## Share as Docker Images (no source)
 
 Use this project as a private source repo and distribute only Docker images + runtime files.
@@ -105,122 +75,6 @@ Copy-Item .env.runtime.example .env
 docker compose --env-file .env -f docker-compose.runtime.yml pull
 docker compose --env-file .env -f docker-compose.runtime.yml up -d
 ```
-
-## Local development without Docker
-
-### 1) Backend
-
-```bash
-cd rfid-backend
-npm install
-npm run dev
-```
-
-Backend runs on `http://localhost:3001` by default.
-
-### 2) Frontend
-
-```bash
-cd rfid-frontend
-npm install
-npm run dev
-```
-
-Frontend runs on `http://localhost:5173` by default.
-
-## Environment variables
-
-### Backend (`rfid-backend`)
-
-- `PORT`: API port (default `3001`)
-- `DATABASE_URL`: Postgres connection string
-- `CORS_ORIGIN`: allowed frontend origin (default `http://localhost:5173`)
-
-Example:
-
-```env
-PORT=3001
-DATABASE_URL=postgresql://rfid_admin:secure_password_123@localhost:5432/rfid_system
-CORS_ORIGIN=http://localhost:5173
-```
-
-### Frontend (`rfid-frontend`)
-
-- `VITE_API_BASE_URL`: REST base URL
-  - dev default: `http://localhost:3001/api`
-  - prod default: `/api`
-- `VITE_SOCKET_URL`: Socket.IO base URL
-  - dev default: `http://localhost:3001`
-  - prod default: current browser origin
-
-Example:
-
-```env
-VITE_API_BASE_URL=http://localhost:3001/api
-VITE_SOCKET_URL=http://localhost:3001
-```
-
-## API overview
-
-### Health
-
-- `GET /api/health`
-
-### Cards
-
-- `GET /api/cards`
-- `GET /api/cards/:id`
-- `POST /api/cards`
-- `PUT /api/cards/:id`
-- `DELETE /api/cards/:id`
-
-### Readers (captors)
-
-- `GET /api/readers`
-- `GET /api/readers/:id`
-- `POST /api/readers`
-- `PUT /api/readers/:id`
-- `DELETE /api/readers/:id`
-
-### Scan events
-
-- `GET /api/scan-events`
-- `GET /api/scan-events/stats/summary`
-
-### Access rules
-
-- `GET /api/access-rules`
-- `GET /api/access-rules/:id`
-- `POST /api/access-rules`
-- `PUT /api/access-rules/:id`
-- `DELETE /api/access-rules/:id`
-
-### Simulation
-
-- `POST /api/simulation/scan`
-- `POST /api/simulation/seed`
-- `DELETE /api/simulation/reset`
-
-## Realtime events
-
-The frontend subscribes to Socket.IO event:
-
-- `scan:realtime`
-
-This event powers the live activity feed in the scanner page.
-
-## Captor (reader) setup guide
-
-Detailed guide:
-
-- [docs/captors-configuration.md](docs/captors-configuration.md)
-
-It explains:
-
-- How to add captors/readers
-- How `doorId` and `direction` must be paired
-- How to configure frontend/backend env for captor usage
-- How to validate and troubleshoot captor behavior
 
 ## Troubleshooting
 
